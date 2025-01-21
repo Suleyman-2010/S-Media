@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block additional_css %}
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='login-n-signup.css') }}"
+/>
+{% endblock %} {% block content %}
+<main>
+	<section>
+		<div>
+			<a href="{{ url_for('login') }}"><button>Login</button></a>
+			<a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
+		</div>
+		<form method="post">
+			<label for="username">Username:</label>
+			<input type="text" name="username" id="username" required />
+
+			<label for="password">Password:</label>
+			<input type="password" name="password" id="password" required />
+
+			<label for="email">Email:</label>
+			<input type="text" name="email" id="email" />
+
+			<label>Gender:</label>
+
+			<span>
+				<input
+					type="radio"
+					name="gender"
+					value="male"
+					class="gender"
+					id="male"
+					required
+				/>
+				<label for="male">Male</label>
+			</span>
+
+			<span>
+				<input
+					type="radio"
+					name="gender"
+					value="female"
+					class="gender"
+					id="female"
+					required
+				/>
+				<label for="female">Female</label>
+			</span>
+
+			<button type="submit">Sign Up</button>
+		</form>
+	</section>
+</main>
+{% endblock %}
