@@ -4,7 +4,7 @@ main {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	section {
+	> section {
 		height: 80%;
 		width: 35%;
 		border: 3px solid var(--primary-color);
@@ -12,14 +12,14 @@ main {
 		display: flex;
 		flex-direction: column;
 		font-size: 30px;
-		div {
+		> div {
 			width: 100%;
 			display: flex;
 			justify-content: center;
 			border-bottom: 3px solid var(--primary-color);
-			a {
+			> a {
 				width: 50%;
-				button {
+				> button {
 					height: 50px;
 					width: 100%;
 					border: 0;
@@ -29,20 +29,20 @@ main {
 					cursor: pointer;
 				}
 				&:first-of-type {
-					button {
+					> button {
 						border-top-left-radius: 50px;
 						border-right: 1.5px solid var(--primary-color);
 					}
 				}
 				&:last-of-type {
-					button {
+					> button {
 						border-top-right-radius: 50px;
 						border-left: 1.5px solid var(--primary-color);
 					}
 				}
 			}
 		}
-		form {
+		> form {
 			height: 100%;
 			display: flex;
 			flex-direction: column;
@@ -50,26 +50,7 @@ main {
 			align-items: start;
 			box-sizing: border-box;
 			padding: 25px;
-			input:not([type="radio"]) {
-				height: 35px;
-				width: 98%;
-				border: 3px solid #000;
-				border-radius: 15px;
-				font-size: 25px;
-			}
-			span {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				input {
-					height: 30px;
-					margin-right: 10px;
-				}
-				label {
-					margin: auto;
-				}
-			}
-			button {
+			> button {
 				height: 50px;
 				width: 100%;
 				margin-top: 20px;
@@ -79,6 +60,7 @@ main {
 				color: var(--primary-color);
 				font-size: 20px;
 				cursor: pointer;
+				align-self: flex-end;
 			}
 		}
 	}

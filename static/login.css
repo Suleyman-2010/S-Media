@@ -1,0 +1,15 @@
+#username,
+#password {
+	width: 100%;
+	label {
+		display: block;
+		padding-bottom: 20px;
+	}
+	input {
+		height: 35px;
+		width: 98%;
+		border: 3px solid #000;
+		border-radius: 15px;
+		font-size: 25px;
+	}
+}

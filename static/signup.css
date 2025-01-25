@@ -1,0 +1,19 @@
+input:not([type="radio"]) {
+	height: 35px;
+	width: 98%;
+	border: 3px solid #000;
+	border-radius: 15px;
+	font-size: 25px;
+}
+span {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	> input {
+		height: 30px;
+		margin-right: 10px;
+	}
+	> label {
+		margin: auto;
+	}
+}

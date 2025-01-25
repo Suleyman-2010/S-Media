@@ -1,32 +1,30 @@
 {% extends "base.html" %} {% block additional_css %}
 <link
 	rel="stylesheet"
-	href="{{ url_for('static', filename='login-n-signup.css') }}"
+	href="{{ url_for('static', filename='login-signup.css') }}"
 />
-{% endblock %} {% block content %}
-<main>
-	<section>
-		<div>
-			<a href="{{ url_for('login') }}"><button>Login</button></a>
-			<a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
-		</div>
-		<form method="post">
-			<label for="username" style="justify-self: center">
-				Username or email:
-			</label>
-			<input type="text" name="username" id="username" required />
-
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" />
+{% endblock %} {% block main %}
+<section>
+	<div>
+		<a href="{{ url_for('login') }}"><button>Login</button></a>
+		<a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
+	</div>
+	<form method="post">
+		<section id="username">
+			<label for="username">Username or email:</label>
+			<input type="text" name="username" id="username-input" required />
+		</section>
+		<section id="password">
 			<label for="password">Password:</label>
 			<input
 				type="password"
-				style="justify-self: center"
 				name="password"
-				id="password"
+				id="password-input"
 				required
 			/>
-
-			<button type="submit">Login</button>
-		</form>
-	</section>
-</main>
+		</section>
+		<button type="submit">Login</button>
+	</form>
+</section>
 {% endblock %}

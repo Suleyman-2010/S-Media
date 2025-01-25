@@ -19,12 +19,21 @@ def signup():
         email: str = request.form["email"]
         gender: str = request.form["gender"]
         users.append(User(username, password, email, gender))
+        current_user = users[-1]
+        return redirect(url_for('user'))
     return render_template("signup.html")
 
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    if request.method == 'POST':
+        username: str = request.form['username']
+        password: str = request.form['password']
     return render_template("login.html")
+
+@app.route('/user')
+def userinfo():
+    return render_template('user.html', user=current_user)
 
 
 if __name__ == "__main__":

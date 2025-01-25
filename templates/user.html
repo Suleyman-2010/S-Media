@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block additional_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}" />
+{% endblock %} {% block content %}
+<section>
+	<section>
+		<label>Username:</label>
+		<span>{{ user.__username }}</span>
+		<label>Password:</label>
+		<span>{{ user.__password }}</span>
+		<label>Email:</label>
+		<span>{{ user.__email }}</span>
+		<label>Gender:</label>
+		<span>{{ user.__gender }}</span>
+	</section>
+</section>
+{% endblock %}
