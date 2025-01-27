@@ -13,10 +13,16 @@
 	<body>
 		<header>
 			<h1>S-Media</h1>
-			<section>
+			{% if not user %}
+			<nav>
 				<a href="{{ url_for('login') }}"><button>Login</button></a>
 				<a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
+			</nav>
+			{% else %}
+			<section>
+				{{ user.username }}
 			</section>
+			{% endif %}
 		</header>
 		<main>{% block main %}{% endblock %}</main>
 	</body>

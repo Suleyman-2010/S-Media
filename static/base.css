@@ -21,7 +21,7 @@ html {
 			h1 {
 				color: var(--secondary-color);
 			}
-			section {
+			nav {
 				width: 220px;
 				display: flex;
 				justify-content: space-between;
@@ -36,6 +36,10 @@ html {
 					font-size: 20px;
 					cursor: pointer;
 				}
+			}
+			section {
+				color: var(--secondary-color);
+				font-size: 2em;
 			}
 		}
 	}
