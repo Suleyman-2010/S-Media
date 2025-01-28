@@ -1,15 +1,28 @@
 {% extends "base.html" %} {% block additional_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}" />
 {% endblock %} {% block main %}
-<section>
-	<label>Username:</label>
-	<span>{{ user.username }}</span>
-	<label>Password:</label>
-	<span>{{ user.password }}</span>
-	<label>Email:</label>
-	<span>{{ user.email }}</span>
-	<label>Gender:</label>
-	<span>{{ user.gender }}</span>
-	<button>Edit data</button>
+<section id="data">
+	<section>
+		<label for="username">Username:</label>
+		<span>{{ user.username }}</span>
+	</section>
+	<section>
+		<label for="password">Password:</label>
+		<span>{{ user.password }}</span>
+	</section>
+	<section>
+		<label for="email">Email:</label>
+		<span>{{ user.email }}</span>
+	</section>
+	<section>
+		<label for="gender">Gender:</label>
+		<span>{{ user.gender }}</span>
+	</section>
+	<section>
+		<a href="/updateuser"
+			><button type="button" style="border-left: 0">Edit data</button></a
+		>
+		<button type="button" style="border-right: 0">Log out</button>
+	</section>
 </section>
 {% endblock %}

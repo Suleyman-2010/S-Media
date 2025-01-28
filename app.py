@@ -1,16 +1,14 @@
 from flask import Flask, render_template, redirect, request
-from werkzeug import Response
-
+from werkzeug.wrappers import Response
 from classes import User, Login
 
 app: Flask = Flask(__name__)
-# app.debug = True
 current_user: User | None = None
 users: list[User] = list()
 
 
 @app.route("/")
-def home():
+def home() -> str | Response:
     if current_user is None:
         return redirect("login")
     else:
@@ -22,13 +20,13 @@ def signup() -> str | Response:
     global current_user
     if current_user is None:
         if request.method == "POST":
-            username: str = request.form["username"]
-            password: str = request.form["password"]
+            username: str = request.form.get("username", "")
+            password: str = request.form.get("password", "")
             email: str = request.form["email"]
             gender: str = request.form["gender"]
             users.append(User(username, password, email, gender))
             current_user = users[-1]
-            return render_template("user.html", user=current_user)
+            return redirect("/")
         return render_template("signup.html", user=current_user)
     else:
         return redirect("/")
@@ -43,15 +41,17 @@ def login() -> str | Response:
             login_object: Login = Login(username, password)
             for user in users:
                 if user == login_object:
-                    return render_template("user.html", user=user)
+                    return redirect("/")
         return render_template("login.html", user=current_user)
     else:
         return redirect("/")
 
 
-@app.route("/user")
-def userinfo():
-    return render_template("user.html", user=current_user)
+@app.route("/updateuser", methods=["POST", "GET"])
+def updateuser() -> str | Response:
+    if current_user is None:
+        return redirect("login")
+    return render_template("datachange.html", user=current_user)
 
 
 if __name__ == "__main__":

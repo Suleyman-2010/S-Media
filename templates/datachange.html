@@ -1,26 +1,29 @@
 {% extends "base.html" %} {% block additional_css %}
 <link
 	rel="stylesheet"
-	href="{{ url_for('static', filename='login-signup.css') }}"
+	href="{{ url_for('static', filename='datachange.css') }}"
 />
-<link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}" />
 {% endblock %} {% block main %}
-<section id="form">
-	<div>
-		<a href="/login"><button>Login</button></a>
-		<a href="/signup"><button>Sign Up</button></a>
-	</div>
+<section id="data">
 	<form method="post">
 		<label for="username">Username:</label>
-		<input type="text" name="username" required />
+		<input
+			type="text"
+			name="username"
+			value="{{ user.username }}"
+			required
+		/>
 
 		<label for="password">Password:</label>
-		<input type="password" name="password" required />
+		<input
+			type="password"
+			name="password"
+			value="{{ user.password }}"
+			required
+		/>
 
 		<label for="email">Email:</label>
-		<input type="text" name="email" />
-
-		<label>Gender:</label>
+		<input type="email" name="email" value="{{ user.email }}" required />
 
 		<span>
 			<input type="radio" name="gender" value="male" required />
@@ -32,7 +35,7 @@
 			<label for="female">Female</label>
 		</span>
 
-		<button type="submit">Sign Up</button>
+		<button type="submit">Change</button>
 	</form>
 </section>
 {% endblock %}

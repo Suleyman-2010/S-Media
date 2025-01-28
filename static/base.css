@@ -20,6 +20,8 @@ html {
 			background-color: var(--primary-color);
 			h1 {
 				color: var(--secondary-color);
+				cursor: default;
+				user-select: none;
 			}
 			nav {
 				width: 220px;
@@ -40,7 +42,15 @@ html {
 			section {
 				color: var(--secondary-color);
 				font-size: 2em;
+				cursor: default;
 			}
+		}
+		main {
+			height: 90%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 		}
 	}
 }

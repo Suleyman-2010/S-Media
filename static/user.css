@@ -1,27 +1,55 @@
-main {
-	height: 90%;
+#data {
+	height: 70%;
+	width: 30%;
+	padding: 15px 15px 0;
+	border: 3px solid var(--primary-color);
+	border-radius: 50px;
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	section {
-		height: 60%;
-		box-sizing: border-box;
-		padding: 30px;
+	flex-direction: column;
+	justify-content: space-around;
+	font-size: 30px;
+
+	> section:last-of-type {
+		height: 15%;
 		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
-		border: 3px solid var(--primary-color);
-		border-radius: 50px;
-		label,
-		span {
-			display: block;
+	}
+	label,
+	span {
+		display: block;
+		font-size: 30px;
+	}
+	span {
+		text-indent: 1cm;
+		&:last-of-type {
+			text-transform: capitalize;
+		}
+	}
+	a {
+		width: 50%;
+		display: inline-block;
+		button {
+			height: 100%;
+			width: 100%;
+			padding: 0;
+			box-sizing: content-box;
+			border: 3px solid var(--primary-color);
+			border-bottom: 0;
+			display: inline-block;
+			background-color: transparent;
 			font-size: 30px;
+			cursor: pointer;
 		}
-		span {
-			text-indent: 1cm;
-			&:last-of-type {
-				text-transform: capitalize;
-			}
-		}
+	}
+	button {
+		height: 100%;
+		width: 50%;
+		padding: 0;
+		box-sizing: content-box;
+		border: 3px solid var(--primary-color);
+		border-bottom: 0;
+		display: inline-block;
+		background-color: transparent;
+		font-size: 30px;
+		cursor: pointer;
 	}
 }
