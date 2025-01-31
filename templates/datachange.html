@@ -5,12 +5,12 @@
 />
 {% endblock %} {% block main %}
 <section id="data">
-	<form method="post">
+	<form action="/user" method="post">
 		<label for="username">Username:</label>
 		<input
 			type="text"
 			name="username"
-			value="{{ user.username }}"
+			value="{{ user[1].username }}"
 			required
 		/>
 
@@ -18,12 +18,12 @@
 		<input
 			type="password"
 			name="password"
-			value="{{ user.password }}"
+			value="{{ user[1].password }}"
 			required
 		/>
 
 		<label for="email">Email:</label>
-		<input type="email" name="email" value="{{ user.email }}" required />
+		<input type="email" name="email" value="{{ user[1].email }}" required />
 
 		<span>
 			<input type="radio" name="gender" value="male" required />

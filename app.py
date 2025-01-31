@@ -3,8 +3,8 @@ from werkzeug.wrappers import Response
 from classes import User, Login
 
 app: Flask = Flask(__name__)
-current_user: User | None = None
-users: list[User] = list()
+current_user: tuple[int, User] | None = None
+users: list[tuple[int, User]] = list()
 
 
 @app.route("/")
@@ -24,12 +24,11 @@ def signup() -> str | Response:
             password: str = request.form.get("password", "")
             email: str = request.form["email"]
             gender: str = request.form["gender"]
-            users.append(User(username, password, email, gender))
+            users.append((len(users) - 1, User(username, password, email, gender)))
             current_user = users[-1]
             return redirect("/")
         return render_template("signup.html", user=current_user)
-    else:
-        return redirect("/")
+    return redirect("/")
 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -43,8 +42,7 @@ def login() -> str | Response:
                 if user == login_object:
                     return redirect("/")
         return render_template("login.html", user=current_user)
-    else:
-        return redirect("/")
+    return redirect("/")
 
 
 @app.route("/updateuser", methods=["POST", "GET"])
