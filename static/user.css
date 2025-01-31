@@ -1,7 +1,7 @@
 #data {
 	height: 70%;
 	width: 30%;
-	padding: 15px 15px 0;
+	padding: 30px 30px 0;
 	border: 3px solid var(--primary-color);
 	border-radius: 50px;
 	display: flex;
@@ -19,7 +19,7 @@
 		font-size: 30px;
 	}
 	span {
-		text-indent: 1cm;
+		text-indent: 5mm;
 		&:last-of-type {
 			text-transform: capitalize;
 		}

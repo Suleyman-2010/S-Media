@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, jsonify
 from werkzeug.wrappers import Response
 from classes import User, Login
 
@@ -11,8 +11,7 @@ users: list[tuple[int, User]] = list()
 def home() -> str | Response:
     if current_user is None:
         return redirect("login")
-    else:
-        return render_template("user.html", user=current_user)
+    return render_template("user.html", user=current_user)
 
 
 @app.route("/signup", methods=["POST", "GET"])
@@ -45,10 +44,31 @@ def login() -> str | Response:
     return redirect("/")
 
 
+@app.route("/logout", methods=["POST"])
+def logout():
+    global current_user
+    current_user = None
+    return jsonify(success=True)
+
+
 @app.route("/updateuser", methods=["POST", "GET"])
 def updateuser() -> str | Response:
+    global current_user
     if current_user is None:
         return redirect("login")
+    if request.method == "POST":
+        changed_username: str = request.form["username"]
+        changed_password: str = request.form["password"]
+        changed_email: str = request.form["email"]
+        changed_gender: str = request.form["gender"]
+        changed_user: tuple[int, User] = current_user[0], User(
+            changed_username, changed_password, changed_email, changed_gender
+        )
+        users.insert(current_user[0], changed_user)
+        users.pop(current_user[0] + 1)
+        current_user = changed_user
+        return redirect("/")
+
     return render_template("datachange.html", user=current_user)
 
 

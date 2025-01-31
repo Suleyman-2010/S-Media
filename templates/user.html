@@ -22,7 +22,11 @@
 		<a href="/updateuser"
 			><button type="button" style="border-left: 0">Edit data</button></a
 		>
-		<button type="submit" style="border-right: 0">Log out</button>
+		<button type="submit" id="logout" style="border-right: 0">
+			Log out
+		</button>
 	</section>
 </section>
+{% endblock %} {% block additional_js %}
+<script src="{{ url_for('static', filename='logout.js') }}"></script>
 {% endblock %}
