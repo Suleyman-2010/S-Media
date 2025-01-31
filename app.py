@@ -23,7 +23,12 @@ def signup() -> str | Response:
             password: str = request.form.get("password", "")
             email: str = request.form["email"]
             gender: str = request.form["gender"]
-            users.append((len(users) - 1, User(username, password, email, gender)))
+            users.append(
+                (
+                    len(users) - 1 if len(users) > 0 else 0,
+                    User(username, password, email, gender),
+                )
+            )
             current_user = users[-1]
             return redirect("/")
         return render_template("signup.html", user=current_user)
@@ -32,13 +37,15 @@ def signup() -> str | Response:
 
 @app.route("/login", methods=["POST", "GET"])
 def login() -> str | Response:
+    global current_user
     if current_user is None:
         if request.method == "POST":
             username: str = request.form["username"]
             password: str = request.form["password"]
             login_object: Login = Login(username, password)
             for user in users:
-                if user == login_object:
+                if user[1] == login_object:
+                    current_user = user
                     return redirect("/")
         return render_template("login.html", user=current_user)
     return redirect("/")

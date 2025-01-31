@@ -6,7 +6,7 @@
 	border-radius: 50px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: space-between;
 	font-size: 30px;
 
 	> section:last-of-type {
@@ -20,9 +20,6 @@
 	}
 	span {
 		text-indent: 5mm;
-		&:last-of-type {
-			text-transform: capitalize;
-		}
 	}
 	a {
 		width: 50%;

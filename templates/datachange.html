@@ -9,6 +9,7 @@
 		<label for="username">Username:</label>
 		<input
 			type="text"
+			id="username"
 			name="username"
 			value="{{ user[1].username }}"
 			required
@@ -17,21 +18,34 @@
 		<label for="password">Password:</label>
 		<input
 			type="password"
+			id="password"
 			name="password"
 			value="{{ user[1].password }}"
 			required
 		/>
 
 		<label for="email">Email:</label>
-		<input type="email" name="email" value="{{ user[1].email }}" required />
+		<input
+			type="email"
+			id="email"
+			name="email"
+			value="{{ user[1].email }}"
+			required
+		/>
 
 		<span>
-			<input type="radio" name="gender" value="male" required />
+			<input type="radio" id="male" name="gender" value="male" required />
 			<label for="male">Male</label>
 		</span>
 
 		<span>
-			<input type="radio" name="gender" value="female" required />
+			<input
+				type="radio"
+				id="female"
+				name="gender"
+				value="female"
+				required
+			/>
 			<label for="female">Female</label>
 		</span>
 

@@ -5,7 +5,7 @@ class User:
         self.email = email
         self.gender = gender
 
-    def eq(self, other):
+    def __eq__(self, other):
         return self.username == other.username and self.password == other.password
 
 

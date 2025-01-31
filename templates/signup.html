@@ -12,23 +12,29 @@
 	</div>
 	<form method="post">
 		<label for="username">Username:</label>
-		<input type="text" name="username" required />
+		<input type="text" id="username" name="username" required />
 
 		<label for="password">Password:</label>
-		<input type="password" name="password" required />
+		<input type="password" id="password" name="password" required />
 
 		<label for="email">Email:</label>
-		<input type="text" name="email" />
+		<input type="text" id="email" name="email" />
 
 		<label>Gender:</label>
 
 		<span>
-			<input type="radio" name="gender" value="male" required />
+			<input type="radio" id="male" name="gender" value="male" required />
 			<label for="male">Male</label>
 		</span>
 
 		<span>
-			<input type="radio" name="gender" value="female" required />
+			<input
+				type="radio"
+				id="female"
+				name="gender"
+				value="female"
+				required
+			/>
 			<label for="female">Female</label>
 		</span>
 
