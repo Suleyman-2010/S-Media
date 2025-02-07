@@ -11,6 +11,9 @@
 		<a href="/signup"><button>Sign Up</button></a>
 	</div>
 	<form method="post">
+		{% if error %} {% if error == 'email exists' %}
+		<div class="error">Email already exists. Choose another one.</div>
+		{% endif %} {% endif %}
 		<label for="username">Username:</label>
 		<input type="text" id="username" name="username" required />
 

@@ -11,9 +11,12 @@
 		<a href="/signup"><button>Sign Up</button></a>
 	</div>
 	<form method="post">
-		<section id="username">
-			<label for="username">Username:</label>
-			<input type="text" name="username" id="username-input" required />
+		{% if error %} {% if error == 'user not found' %}
+		<div class="error">User not found.</div>
+		{% endif %} {% endif %}
+		<section id="email">
+			<label for="email">Email:</label>
+			<input type="text" name="email" id="email-input" required />
 		</section>
 		<section id="password">
 			<label for="password">Password:</label>

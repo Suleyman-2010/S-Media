@@ -3,7 +3,7 @@ import sqlite3 as sql
 from werkzeug.wrappers import Response
 
 app: Flask = Flask(__name__)
-current_user: tuple[int, str, str, str, str] | None = None
+current_user: tuple[str, str, str, str] | None = None
 
 
 @app.route("/")
@@ -30,22 +30,24 @@ def signup() -> str | Response:
         connection.autocommit = True
         cursor = connection.cursor()
 
-        cursor.execute(
-            f"""
-                INSERT INTO "user" (username, password, email, gender)
-                VALUES(?, ?, ?, ?)
-            """,
-            (username, password, email, gender),
-        )
-        cursor.execute("SELECT id FROM user;")
+        try:
+            cursor.execute(
+                f"""
+                    INSERT INTO "user"
+                    VALUES(?, ?, ?, ?)
+                """,
+                (username, password, email, gender),
+            )
+        except sql.IntegrityError:
+            return render_template("signup.html", error="email exists")
 
-        current_user = len(cursor.fetchall()), username, password, email, gender
+        current_user = username, password, email, gender
 
         connection.close()
 
         return redirect("/")
 
-    return render_template("signup.html", user=current_user)
+    return render_template("signup.html")
 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -56,7 +58,7 @@ def login() -> str | Response:
         return redirect("/")
 
     if request.method == "POST":
-        username: str = request.form["username"]
+        email: str = request.form["email"]
         password: str = request.form["password"]
 
         connection = sql.connect("user.db")
@@ -65,17 +67,18 @@ def login() -> str | Response:
 
         cursor.execute("SELECT * FROM user;")
         for user in cursor.fetchall():
-            if user[1] == username and user[2] == password:
+            if user[2] == email and user[1] == password:
                 current_user = user
                 connection.close()
                 return redirect("/")
         connection.close()
+        return render_template("login.html", error="user not found")
 
-    return render_template("login.html", user=current_user)
+    return render_template("login.html")
 
 
 @app.route("/logout", methods=["POST"])
-def logout():
+def logout() -> Response:
     global current_user
     current_user = None
     return jsonify(success=True)
@@ -98,28 +101,30 @@ def updateuser() -> str | Response:
         connection.autocommit = True
         cursor = connection.cursor()
 
-        cursor.execute(
-            f"""
-				UPDATE user
-				SET username = ?,
-				password = ?,
-				email = ?,
-				gender = ?
-				WHERE id = ?
-			""",
-            (
-                changed_username,
-                changed_password,
-                changed_email,
-                changed_gender,
-                current_user[0],
-            ),
-        )
+        try:
+            cursor.execute(
+                f"""
+		    		UPDATE user
+		    		SET username = ?,
+		    		password = ?,
+		    		email = ?,
+		    		gender = ?
+		    		WHERE username = ?
+		    	""",
+                (
+                    changed_username,
+                    changed_password,
+                    changed_email,
+                    changed_gender,
+                    current_user[0],
+                ),
+            )
+        except sql.IntegrityError:
+            return render_template("datachange.html", error="email exists")
 
         connection.close()
 
-        changed_user: tuple[int, str, str, str, str] = (
-            current_user[0],
+        changed_user: tuple[str, str, str, str] = (
             changed_username,
             changed_password,
             changed_email,
@@ -132,4 +137,4 @@ def updateuser() -> str | Response:
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

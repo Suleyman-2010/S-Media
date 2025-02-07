@@ -6,12 +6,15 @@
 {% endblock %} {% block main %}
 <section id="data">
 	<form method="post">
+		{% if error %} {% if error == 'email exists'}
+		<div class="error">Email already exists. Use another one.</div>
+		{% endif %} {% endif %}
 		<label for="username">Username:</label>
 		<input
 			type="text"
 			id="username"
 			name="username"
-			value="{{ user[1] }}"
+			value="{{ user[0] }}"
 			required
 		/>
 
@@ -20,7 +23,7 @@
 			type="password"
 			id="password"
 			name="password"
-			value="{{ user[2] }}"
+			value="{{ user[1] }}"
 			required
 		/>
 
@@ -29,7 +32,7 @@
 			type="email"
 			id="email"
 			name="email"
-			value="{{ user[3] }}"
+			value="{{ user[2] }}"
 			required
 		/>
 
