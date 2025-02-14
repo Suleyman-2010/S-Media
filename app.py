@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, jsonify
 import sqlite3 as sql
 from werkzeug.wrappers import Response
+from utils import SQLQuery
 
 app: Flask = Flask(__name__)
 current_user: tuple[str, str, str, str] | None = None
@@ -26,24 +27,19 @@ def signup() -> str | Response:
         email: str = request.form["email"]
         gender: str = request.form["gender"]
 
-        connection = sql.connect("user.db")
-        connection.autocommit = True
-        cursor = connection.cursor()
+        with SQLQuery("user.db") as cursor:
+            try:
+                cursor.execute(
+                    f"""
+                        INSERT INTO "user"
+                        VALUES(?, ?, ?, ?)
+                    """,
+                    (username, password, email, gender),
+                )
+            except sql.IntegrityError:
+                return render_template("signup.html", error="email exists")
 
-        try:
-            cursor.execute(
-                f"""
-                    INSERT INTO "user"
-                    VALUES(?, ?, ?, ?)
-                """,
-                (username, password, email, gender),
-            )
-        except sql.IntegrityError:
-            return render_template("signup.html", error="email exists")
-
-        current_user = username, password, email, gender
-
-        connection.close()
+            current_user = username, password, email, gender
 
         return redirect("/")
 
@@ -61,18 +57,13 @@ def login() -> str | Response:
         email: str = request.form["email"]
         password: str = request.form["password"]
 
-        connection = sql.connect("user.db")
-        connection.autocommit = True
-        cursor = connection.cursor()
-
-        cursor.execute("SELECT * FROM user;")
-        for user in cursor.fetchall():
-            if user[2] == email and user[1] == password:
-                current_user = user
-                connection.close()
-                return redirect("/")
-        connection.close()
-        return render_template("login.html", error="user not found")
+        with SQLQuery("user.db") as cursor:
+            cursor.execute("SELECT * FROM user;")
+            for user in cursor.fetchall():
+                if user[2] == email and user[1] == password:
+                    current_user = user
+                    return redirect("/")
+            return render_template("login.html", error="user not found")
 
     return render_template("login.html")
 
@@ -97,32 +88,27 @@ def updateuser() -> str | Response:
         changed_email: str = request.form["email"]
         changed_gender: str = request.form["gender"]
 
-        connection = sql.connect("user.db")
-        connection.autocommit = True
-        cursor = connection.cursor()
-
-        try:
-            cursor.execute(
-                f"""
-		    		UPDATE user
-		    		SET username = ?,
-		    		password = ?,
-		    		email = ?,
-		    		gender = ?
-		    		WHERE username = ?
-		    	""",
-                (
-                    changed_username,
-                    changed_password,
-                    changed_email,
-                    changed_gender,
-                    current_user[0],
-                ),
-            )
-        except sql.IntegrityError:
-            return render_template("datachange.html", error="email exists")
-
-        connection.close()
+        with SQLQuery("user.db") as cursor:
+            try:
+                cursor.execute(
+                    f"""
+		        		UPDATE user
+		        		SET username = ?,
+		        		password = ?,
+		        		email = ?,
+		        		gender = ?
+		        		WHERE username = ?
+		        	""",
+                    (
+                        changed_username,
+                        changed_password,
+                        changed_email,
+                        changed_gender,
+                        current_user[0],
+                    ),
+                )
+            except sql.IntegrityError:
+                return render_template("datachange.html", error="email exists")
 
         changed_user: tuple[str, str, str, str] = (
             changed_username,
@@ -137,4 +123,4 @@ def updateuser() -> str | Response:
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
